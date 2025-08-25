@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share Your Location</title>
+</head>
+<body>
+<h2>Click the button to share your location:</h2>
+<button onclick="getLocation()">Share Location</button>
+
+<script>
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(sendLocation, showError);
+    } else {
+        alert("Geolocation is not supported by your browser.");
+    }
+}
+
+function sendLocation(position) {
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+
+    const email = "ankitchauhandcc@gmail.com";
+    const subject = "Shared Location";
+    const body = User shared location:\nLatitude: ${latitude}\nLongitude: ${longitude}\nGoogle Maps: https://www.google.com/maps?q=${latitude},${longitude};
+
+    window.location.href = mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)};
+}
+
+function showError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            alert("You denied the request for Geolocation.");
+            break;
+        case error.POSITION_UNAVAILABLE:
+            alert("Location information is unavailable.");
+            break;
+        case error.TIMEOUT:
+            alert("The request to get your location timed out.");
+            break;
+        case error.UNKNOWN_ERROR:
+            alert("An unknown error occurred.");
+            break;
+    }
+}
+</script>
+</body>
+</html>
